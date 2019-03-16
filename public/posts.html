@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+
+    <!-- Materialize Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Materialize ICONs -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- jQuery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Firebase App  -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+
+    <!-- Firebase Services -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-storage.js"></script>
+
+    <!-- Just for login -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+
+    <!-- Materialize Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Common  -->
+    <script src="js/authCommon.js"></script>
+
+</head>
+
+<body>
+    <!--  NAV -->
+    <nav class="nav-wrapper indigo">
+        <div class="container">
+            <a href="/index" class="brand-logo left hide-on-med-and-down"><i class="material-icons">home</i>Textador</a>
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                <i class="material-icons">menu</i>
+                <a href="/index" class="brand-logo"><i class="material-icons">home</i>Textador</a>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/users">Users</a></li>
+                <li><a href="/posts">Posts</a></li>
+                <li><a href="/transactions">Transactions</a></li>
+                <li><a href="/pictures">Pictures</a></li>
+                <li class="notLoggedIn hide"><a href="/login" class="btn white indigo-text">Login</a></li>
+                <li class="loggedIn"><button class="waves-effect waves-light btn indigo white-text pull-right" onclick="authLogOff();">logout</button></li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- For mobile devices -->
+    <ul class="sidenav" id="mobile-links">
+        <a href="/index" class="brand-logo"><i class="material-icons">home</i>Home</a>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/transactions">Transactions</a></li>
+        <li><a href="/pictures">Pictures</a></li>
+        <li class="notLoggedIn hide"><a href="/login" class="btn white indigo-text">Login</a></li>
+        <li class="loggedIn"><button class="waves-effect waves-light btn indigo white-text pull-right" onclick="authLogOff();">logout</button></li>
+    </ul>
+    <!--  END NAV -->
+
+    <!-- START CONTENT -->
+    <main class="container">
+        <p class="flow-text">Posts</p>
+        <!-- Entry Form -->
+        <section id="postFields" class="section">
+            <form id="postInputForm" class="col s12">
+                <!-- PHOTO Meta Data -->
+                <div class="input-field">
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <input id="postTitle" type="text" class="validate" required="" aria-required="true">
+                                    <label for="postTitle">Title</label>
+                                </div>
+                                <div class="input-field col s12 m4">
+                                    <input id="postAmount" type="text" class="validate" required="" aria-required="true">
+                                    <label for="postAmount">Amount</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="postBody" name="postBody" class="materialize-textarea"></textarea>
+                                    <label for="postBody">Body</label>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- ================================================================================================================= -->
+                        <!-- file upload form -->
+                        <form id="uploadPostFileForm" class="col s12">
+                            <div class="file-field input-field">
+                                <div class="btn indigo col s2">
+                                    <i class="material-icons left white-text">folder</i>
+                                </div>
+                                <div>
+                                    <input id="postPhotoFile" name="photo" type="file" accept="image/png, image/jpeg"
+                                        class="validate" required="" aria-required="true">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <i class="clearPostFileUpload material-icons grey-text prefix">cancel</i>
+                                    <label for="uploadPostFileName">File Name</label>
+                                    <input id="uploadPostFileName" class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </form>
+                        <!-- ================================================================================================================= -->
+                    </div>
+                </div>
+                <div class="col s12">
+                    <button id="savePostPhoto" class="btn indigo waves-effect waves-light">Save Post</button>
+                    <button id="clearPostForm" type="reset" class="btn indigo waves-effect waves-light">Clear</button>
+                </div>
+            </form>
+        </section>
+
+
+        <!-- TABS for viewing Posts by Card or Collection -->
+        <section id="postList" class="section">
+            <div class="row">
+                <div class="col s12 l12">
+                    <!-- tabs -->
+                    <ul class="tabs left-align">
+                        <li class="tab col s6 m3">
+                            <a href="#postCards" class="active indigo-text text-darken-4">
+                                <span>Post Cards</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="postCards" class="col s12">
+                        <!-- Cards of Photos -->
+                        <div class="row postCardContent">
+                        </div>
+                        <!-- Cards of Post -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ================================================================================================================= -->
+
+        <!-- MODALS -->
+        <!-- ================================================================================================================= -->
+        <!-- POST Info MODAL -->
+        <div id="modal-post" class="modal">
+            <div class="modal-content center-align">
+                <h4>Post Details</h4><br />
+                <div class="post-details"></div>
+            </div>
+        </div>
+
+        <!-- ================================================================================================================= -->
+        <!-- COMMON MODALS ALL SHOULD HAVE -->
+        <!-- ================================================================================================================= -->
+        <!-- ERROR MODAL -->
+        <div id="modal-error" class="modal">
+            <div class="modal-content center-align">
+                <i class="material-icons left white-text">error</i>
+                <h4>Error</h4><br />
+                <div class="error-details"></div>
+            </div>
+        </div>
+
+        <!-- INFORMATION MODAL -->
+        <div id="modal-info" class="modal">
+            <div class="modal-content center-align">
+                <i class="material-icons left white-text">info</i>
+                <h4>Message</h4><br />
+                <div class="info-details"></div>
+            </div>
+        </div>
+        <!-- ================================================================================================================= -->
+        <!-- END MODALS -->
+        <!-- ================================================================================================================= -->
+
+    </main>
+
+    <!-- Common UI  -->
+    <script src="js/uiCommon.js"></script>
+
+    <!-- Common Photo Functions for Uploads  -->
+    <script src="js/photoCommon.js"></script>
+
+    <!-- the js for this page  -->
+    <script src="js/posts.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+Using Local DB
+==> 🌎  Listening on port 3000. Visit http://localhost:3000/ in your browser.
+{ id: 1,
+  name: null,
+  uid: 'CQyn1ufM0uVLNUOwgIc1eSuLdmq1',
+  email: 'paul.linck@gmail.com',
+  mySystemNumber: null,
+  myCellNumber: null,
+  emergencyNumber: null,
+  primaryPhoto: null,
+  role: null,
+  adminID: null,
+  bankerID: null,
+  active: null,
+  balance: null,
+  lastSignIn: null,
+  createdAt: 2019-03-05T00:29:36.000Z,
+  updatedAt: 2019-03-05T00:29:36.000Z }
+undefined
+{ id: 1,
+  name: null,
+  uid: 'CQyn1ufM0uVLNUOwgIc1eSuLdmq1',
+  email: 'paul.linck@gmail.com',
+  mySystemNumber: null,
+  myCellNumber: null,
+  emergencyNumber: null,
+  primaryPhoto: null,
+  role: null,
+  adminID: null,
+  bankerID: null,
+  active: null,
+  balance: null,
+  lastSignIn: null,
+  createdAt: 2019-03-05T00:29:36.000Z,
+  updatedAt: 2019-03-05T00:29:36.000Z }
+undefined

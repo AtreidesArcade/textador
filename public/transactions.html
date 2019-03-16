@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+
+    <!-- Materialize Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Materialize ICONs -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- jQuery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Firebase App  -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+
+    <!-- Firebase Services -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-firestore.js"></script>
+
+    <!-- Just for login -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+
+    <!-- Materialize Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Common UI  -->
+    <script src="js/uiCommon.js"></script>
+    <!-- Common  -->
+    <script src="js/authCommon.js"></script>
+
+</head>
+
+<body>
+    <!--  NAV -->
+    <nav class="nav-wrapper indigo">
+        <div class="container">
+            <a href="/index" class="brand-logo left hide-on-med-and-down"><i class="material-icons">home</i>Textador</a>
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                <i class="material-icons">menu</i>
+                <a href="/index" class="brand-logo"><i class="material-icons">home</i>Textador</a>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/users">Users</a></li>
+                <li><a href="/posts">Posts</a></li>
+                <li><a href="/transactions">Transactions</a></li>
+                <li><a href="/pictures">Pictures</a></li>
+                <li class="notLoggedIn hide"><a href="/login" class="btn white indigo-text">Login</a></li>
+                <li class="loggedIn"><button class="waves-effect waves-light btn indigo white-text pull-right" onclick="authLogOff();">logout</button></li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- For mobile devices -->
+    <ul class="sidenav" id="mobile-links">
+        <a href="/index" class="brand-logo"><i class="material-icons">home</i>Home</a>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/transactions">Transactions</a></li>
+        <li><a href="/pictures">Pictures</a></li>
+        <li class="notLoggedIn hide"><a href="/login" class="btn white indigo-text">Login</a></li>
+        <li class="loggedIn"><button class="waves-effect waves-light btn indigo white-text pull-right" onclick="authLogOff();">logout</button></li>
+    </ul>
+    <!--  END NAV -->
+
+    <!-- START CONTENT -->
+    <main class="container">
+        <p class="flow-text">Transactions</p>
+    </main>
+    <!-- END CONTENT -->
+
+    <!-- the js for this page  -->
+    <script src="js/transactions.js"></script>
+
+</body>
+
+</html>

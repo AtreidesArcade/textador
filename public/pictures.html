@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pictures</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+
+    <!-- Materialize Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Materialize ICONs -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- jQuery JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Firebase App  -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script>
+
+    <!-- Firebase Services -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-storage.js"></script>
+
+    <!-- Just for login -->
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.1.1/firebaseui.css" />
+
+    <!-- Materialize Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Common  -->
+    <script src="js/authCommon.js"></script>
+
+</head>
+
+<body>
+    <!--  NAV -->
+    <nav class="nav-wrapper indigo">
+        <div class="container">
+            <a href="/index" class="brand-logo left hide-on-med-and-down"><i class="material-icons">home</i>Textador</a>
+            <a href="#" class="sidenav-trigger" data-target="mobile-links">
+                <i class="material-icons">menu</i>
+                <a href="/index" class="brand-logo"><i class="material-icons">home</i>Textador</a>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/users">Users</a></li>
+                <li><a href="/posts">Posts</a></li>
+                <li><a href="/transactions">Transactions</a></li>
+                <li><a href="/pictures">Pictures</a></li>
+                <li class="notLoggedIn hide"><a href="/login" class="btn white indigo-text">Login</a></li>
+                <li class="loggedIn"><button class="waves-effect waves-light btn indigo white-text pull-right" onclick="authLogOff();">logout</button></li>
+
+            </ul>
+        </div>
+    </nav>
+    <!-- For mobile devices -->
+    <ul class="sidenav" id="mobile-links">
+        <a href="/index" class="brand-logo"><i class="material-icons">home</i>Home</a>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/transactions">Transactions</a></li>
+        <li><a href="/pictures">Pictures</a></li>
+        <li class="notLoggedIn hide"><a href="/login" class="btn white indigo-text">Login</a></li>
+        <li class="loggedIn"><button class="waves-effect waves-light btn indigo white-text pull-right" onclick="authLogOff();">logout</button></li>
+    </ul>
+    <!--  END NAV -->
+
+    <!-- START CONTENT -->
+
+    <main class="container">
+        <!-- <p class="flow-text">Pictures</p> -->
+        <!-- Entry Form -->
+        <section id="photoFields" class="section">
+            <form id="photoInputForm" class="col s12">
+                <!-- PHOTO Meta Data -->
+                <div class="input-field">
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input id="fileTitle" type="text" class="validate" required=""
+                                        aria-required="true">
+                                    <label for="fileTitle">Title</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="fileDescription" name="photoDescription" class="materialize-textarea"></textarea>
+                                    <label for="fileDescription">Desciption</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END PHOTO Meta Data -->
+
+                <!-- Input upload file -->
+                <!-- <p class="flow-text indigo-text text-darken-4">Choose file or enter URL of Photo</p> -->
+                <form id="uploadFileForm" class="col s12">
+                    <div class="file-field input-field">
+                        <div class="btn indigo col s2">
+                            <i class="material-icons left white-text">folder</i>
+                        </div>
+                        <div>
+                            <input id="photoFile" name="photo" type="file" accept="image/png, image/jpeg" class="validate"
+                                required="" aria-required="true">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <i class="clearFileUpload material-icons grey-text prefix">cancel</i>
+                            <label for="uploadFileName">File Name</label>
+                            <input id="uploadFileName" class="file-path validate" type="text">
+                        </div>
+
+                    </div>
+                </form>
+                <!-- Input upload from URL -->
+                <form id="inputURLForm" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i id="clearPhotoURL" class="material-icons grey-text prefix">cancel</i>
+                            <textarea id="inputPhotoURL" type="url" name="inputPhotoURL" class="materialize-textarea validate"
+                                required="" aria-required="true"></textarea>
+                            <label for="inputPhotoURL">Photo URL</label>
+                            <span class="helper-text" data-error="Bad Url" data-success="Good URL"></span>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="col s12">
+                    <button id="savePhoto" class="btn indigo waves-effect waves-light">Save Photo</button>
+                    <button id="clearForm" type="reset" class="btn indigo waves-effect waves-light">Clear</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- TABS for viewing Photos by Card or Collection -->
+        <section id="photoList" class="section">
+            <div class="row">
+                <div class="col s12 l12">
+                    <!-- tabs -->
+                    <ul class="tabs left-align">
+                        <li class="tab col s6 m3">
+                            <a href="#photoCards" class="active indigo-text text-darken-4">
+                                <span>Photo Cards</span>
+                            </a>
+                        </li>
+                        <li class="tab col s6 m3">
+                            <a href="#photoCollection" class="active indigo-text text-darken-4">
+                                <span>Photo Listing</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="photoCards" class="col s12">
+                        <!-- Cards of Photos -->
+                        <div class="row photoCardContent">
+                            <!-- <div id="photoId" data-key="photoId" class="photoHeader col s12 l6">
+                                <div class="card">
+                                    <div class="card-image">
+                                        <img data-key="photoId" class="photoImage responsive-img materialboxed" src="" alt="" >
+                                        <a href="" class="halfway-fab btn-floating pink">
+                                            <i class="material-icons">favorite</i>
+                                        </a>
+                                    </div>
+                                    <div class="card-content">
+                                        <span data-key="photoId" class="photoTitle flow-text card-title"></span>
+                                        <p data-key="photoId" class="photoDescription"></p>
+                                    </div>
+                                    <div class="card-action">
+                                        <a href="#" class="indigo-text text-darken-4">
+                                            <i data-key="photoId" class="photoInfo material-icons left">info</i>
+                                        </a>
+                                        <a href="#" class="indigo-text text-darken-4">
+                                            <i data-key="photoId" class="photoEdit material-icons left">edit</i>
+                                        </a>
+                                        <a href="#" class="indigo-text text-darken-4">
+                                            <i data-key="photoId" class="photoDelete material-icons left">delete</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <!-- Cards of Photos -->
+                    </div>
+                    <div id="photoCollection" class="col s12">
+                        <!-- Collection of Photos -->
+                        <ul class="collection with-header">
+                            <li class="collection-header">
+                                <h4>Photos</h4>
+                            </li>
+                            <li class="collection-item avatar">
+                                <a href="https://image.png">
+                                    <i class="material-icons circle blue">cloud</i>
+                                </a>
+                                <span class="title">Title - </span>
+                                <span class="title">Description</span>
+                                <p href="https://image.png" class="grey-text">https://image.png</p>
+                                <a href="" class="secondary-content">
+                                    <i class="material-icons light-blue-text">email</i>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- End Collection of Photos -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END TABS for viewing Photos by Card or Collection -->
+
+        <!-- ================================================================================================================= -->
+        <!-- MODALS -->
+        <!-- ================================================================================================================= -->
+        <!-- Photo Info MODAL -->
+        <div id="modal-photo" class="modal">
+            <div class="modal-content center-align">
+                <h4>Photo Details</h4><br />
+                <div class="photo-details"></div>
+            </div>
+        </div>
+
+        <!-- ================================================================================================================= -->
+        <!-- COMMON MODALS ALL SHOULD HAVE -->
+        <!-- ================================================================================================================= -->
+        <!-- ERROR MODAL -->
+        <div id="modal-error" class="modal">
+            <div class="modal-content center-align">
+                <i class="material-icons left white-text">error</i>
+                <h4>Error</h4><br />
+                <div class="error-details"></div>
+            </div>
+        </div>
+
+        <!-- INFORMATION MODAL -->
+        <div id="modal-info" class="modal">
+            <div class="modal-content center-align">
+                <i class="material-icons left white-text">info</i>
+                <h4>Message</h4><br />
+                <div class="info-details"></div>
+            </div>
+        </div>
+        <!-- ================================================================================================================= -->
+        <!-- END MODALS -->
+        <!-- ================================================================================================================= -->
+    </main>
+    <!-- END CONTENT -->
+
+    <!-- Common UI  -->
+    <script src="js/uiCommon.js"></script>
+
+    <!-- Common Photo Functions for Uploads  -->
+    <script src="js/photoCommon.js"></script>
+
+    <!-- the js for this page  -->
+    <script src="js/pictures.js"></script>
+
+</body>
+
+</html>

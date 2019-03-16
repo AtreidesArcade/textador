@@ -1,0 +1,9 @@
+form.signup,
+form.login {
+  margin-top: 50px;
+}
+
+body > nav > div > ul > li.loggedIn > button {
+  color: blue;
+  background: white;
+}
